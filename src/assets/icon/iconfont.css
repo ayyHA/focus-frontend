@@ -1,0 +1,168 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3293574 */
+  src: url('iconfont.woff2?t=1649190135885') format('woff2'),
+       url('iconfont.woff?t=1649190135885') format('woff'),
+       url('iconfont.ttf?t=1649190135885') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 20px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.focus-icon-zhuanfa:before {
+  content: "\e6c9";
+}
+.focus-icon-zhuanfa:hover{
+  content: "\e6c9";
+  color: lightgreen;
+}
+
+.focus-icon-pinglun2:before {
+  content: "\e60a";
+} 
+.focus-icon-pinglun2:hover{
+  content: "\e60a";
+  color:cornflowerblue;
+}
+
+
+.focus-icon-jiazai:before {
+  content: "\e699";
+}
+
+.focus-icon-denglu:before {
+  content: "\e67c";
+}
+
+.focus-icon-mima1:before {
+  content: "\e62c";
+}
+
+.focus-icon-account-circle-line:before {
+  content: "\e7b8";
+}
+
+.focus-icon-aixin:before {
+  content: "\e8ab";
+  
+}
+/* .focus-icon-aixin{
+  content: "\e8ab";
+}
+.focus-icon-aixin:hover{
+  content: "\e8ab";
+  color: pink;
+} */
+
+.focus-icon-bianji:before {
+  content: "\e8ac";
+}
+
+.focus-icon-dianzan:before {
+  content: "\e8ad";
+}
+
+.focus-icon-gengduo:before {
+  content: "\e8af";
+}
+
+.focus-icon-fenxiang:before {
+  content: "\e8b0";
+}
+
+.focus-icon-huatifuhao:before {
+  content: "\e8b1";
+}
+
+.focus-icon-huati:before {
+  content: "\e8b2";
+}
+
+.focus-icon-guanzhu:before {
+  content: "\e8b3";
+}
+
+.focus-icon-mima:before {
+  content: "\e8b4";
+}
+
+.focus-icon-nan:before {
+  content: "\e8b5";
+}
+
+.focus-icon-nv:before {
+  content: "\e8b6";
+}
+
+.focus-icon-pinglun:before {
+  content: "\e8b7";
+}
+
+.focus-icon-shezhi:before {
+  content: "\e8b8";
+}
+
+.focus-icon-shangchuan:before {
+  content: "\e8b9";
+}
+
+.focus-icon-shoucang:before {
+  content: "\e8ba";
+}
+
+.focus-icon-shouye:before {
+  content: "\e8bb";
+}
+
+.focus-icon-sousuo:before {
+  content: "\e8bc";
+}
+
+.focus-icon-taolunqu:before {
+  content: "\e8bd";
+}
+
+.focus-icon-tishi:before {
+  content: "\e8be";
+}
+
+.focus-icon-tupian:before {
+  content: "\e8bf";
+}
+
+.focus-icon-xiaoxi:before {
+  content: "\e8c0";
+}
+
+.focus-icon-xiaoxizhongxin:before {
+  content: "\e8c1";
+}
+
+.focus-icon-yanjing:before {
+  content: "\e8c2";
+}
+
+.focus-icon-aixin1:before {
+  content: "\e8c3";
+}
+
+.focus-icon-dianzan1:before {
+  content: "\e8c4";
+}
+
+.focus-icon-huati1:before {
+  content: "\e8c5";
+}
+
+.focus-icon-pinglun1:before {
+  content: "\e8c6";
+}
+
+.focus-icon-chuangzuo:before {
+  content: "\e8ca";
+}
+
