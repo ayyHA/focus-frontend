@@ -132,6 +132,7 @@ export default {
   width: 50%;
   font-family: "xingGuang";
   font-size: 25px;
+  border-radius: 9999px;
 }
 
 span {

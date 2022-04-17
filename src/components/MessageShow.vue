@@ -18,6 +18,15 @@
             </div>
           </div>
           <div class="div-message-text">{{ message.text }}</div>
+          <div class="div-message-keywords" v-if="formatKeywords != null">
+            <div
+              class="message-keyword"
+              v-for="keyword in formatKeywords"
+              :key="keyword"
+            >
+              #{{ keyword }}&nbsp;
+            </div>
+          </div>
           <div v-if="message.images != null">
             <el-row :gutter="10">
               <el-col
@@ -143,6 +152,7 @@ export default {
       likePositionLeft: false,
       likePositionRight: false,
       heartShake: false,
+      formatKeywords: null,
     };
   },
   created() {
@@ -158,6 +168,11 @@ export default {
       this.message.images = this.imagesArray(this.message.images);
     // 修改时间格式
     this.message.createAt = this.transformTimestamp(this.message.createAt);
+    // 修改keywords格式
+    if (this.message.keywords != "" && this.message.keywords != null) {
+      this.message.keywords = String(this.message.keywords);
+      this.formatKeywords = this.message.keywords.split(",");
+    }
   },
 
   methods: {
@@ -234,9 +249,14 @@ export default {
   border-bottom: 1px solid;
   border-bottom-color: #dcdcdc;
 }
+.div-container:hover {
+  background-color: #eee;
+  transition: 0.25s linear;
+}
+
 .div-both-slides {
   padding: 0 16px;
-  margin-top: 12px;
+  padding-top: 12px;
 }
 .div-box {
   /* width: 100%; */
@@ -323,5 +343,15 @@ export default {
 
 .is_animating {
   animation: heart-burst 0.8s steps(28) 1;
+}
+
+.div-message-keywords {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.message-keyword {
+  color: cornflowerblue;
+  cursor: pointer;
 }
 </style>

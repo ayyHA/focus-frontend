@@ -50,10 +50,18 @@ const saveUnlike = async (messageId, userId, likeCount) => {
     });
 }
 
+const getLikeData = async (userId) => {
+    return instance.request({
+        method: "get",
+        url: `/message/like/getLikeData/${userId}`,
+    });
+}
+
 export default {
     uploadMultiPictures,
     publishMessage,
     getMessageInfoList,
     saveLike,
     saveUnlike,
+    getLikeData,
 }

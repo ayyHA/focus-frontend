@@ -121,6 +121,10 @@
 .focus-icon-sousuo:before {
   content: "\e8bc";
 }
+/* .focus-icon-sousuo:focus-within{
+  content: "\e8bc";
+  color: rgb(29, 155, 240);
+} */
 
 .focus-icon-taolunqu:before {
   content: "\e8bd";

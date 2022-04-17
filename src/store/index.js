@@ -5,7 +5,7 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
-    menuHeader: ["首页", "搜索", "通知", "消息", "个人中心"],
+    menuHeader: ["首页", "搜索", "通知", "聊天", "个人中心"],
     menuName: "首页",
     userInfo: {
       id: "",
