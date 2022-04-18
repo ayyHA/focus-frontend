@@ -1,7 +1,7 @@
 <template>
-  <div class="divPaPa">
-    <div class="divText">{{ newsContent }}</div>
-    <el-image class="imageProps" :src="newsUrl" fit="cover"> </el-image>
+  <div class="newsContainer">
+    <div class="newsText">{{ newsContent }}</div>
+    <el-image class="newsPic" :src="newsUrl" fit="cover"> </el-image>
   </div>
 </template>
 
@@ -24,16 +24,21 @@ export default {
 </script>
 
 <style scoped>
-.divPaPa {
+.newsContainer {
   display: flex;
   flex-flow: row nowrap;
-  align-items: stretch;
+  align-items: center;
 }
-.divText {
-  flex-grow: 1;
-  background-color: royalblue;
+
+.newsContainer:hover {
+  background-color: #eee;
+  transition: 0.25s linear;
 }
-.imageProps {
+
+.newsText {
+  width: calc(100% - 100px);
+}
+.newsPic {
   width: 100px;
   height: 100px;
 }

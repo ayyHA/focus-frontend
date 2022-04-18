@@ -1,7 +1,7 @@
 <template>
   <div
     :style="{
-      height: this.fullScreenHeight - 91 + 'px',
+      height: this.fullScreenHeight - 88 + 'px',
       'overflow-y': 'scroll',
     }"
     class="el-aside"
