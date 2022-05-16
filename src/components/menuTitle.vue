@@ -1,5 +1,5 @@
 <template>
-  <div class="divider" v-if="title != '搜索'">
+  <div class="divider" v-if="title != '搜索' && title != '聊天'">
     <div class="menuTitle menuMargin">
       {{ title }}
     </div>

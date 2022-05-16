@@ -2,9 +2,10 @@ import axios from 'axios'
 
 const instance = axios.create({
     baseURL: 'http://localhost:9000/',
-    timeout: 5000,
+    timeout: 30000,
+    // 允许携带cookie
+    withCredentials: true,
 });
-
 // 添加请求拦截器
 instance.interceptors.request.use(function (config) {
     // 给请求头加上token，后端认证鉴权需要

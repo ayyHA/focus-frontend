@@ -318,7 +318,7 @@ export default {
   cursor: pointer;
   height: 50px;
   width: 50px;
-  background-image: url("http://r9gseewjp.hn-bkt.clouddn.com/like.png");
+  background-image: url("http://qny.ayyha.store/like.png");
   /* background-position: left; */
   background-repeat: no-repeat;
   background-size: 2900%;
