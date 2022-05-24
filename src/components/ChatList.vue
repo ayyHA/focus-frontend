@@ -1,35 +1,58 @@
 <template>
-  <div
-    :style="{ height: this.fullScreenHeight - 10 + 'px' }"
-    class="chat-container"
-  >
-    <div class="search-container">
-      <div class="search-left">
-        <span class="iconfont focus-icon-sousuo"></span>
+  <div class="container">
+    <div class="chat-container">
+      <div class="search-container">
+        <div class="search-left">
+          <span class="iconfont focus-icon-sousuo"></span>
+        </div>
+        <div class="search-right">
+          <input
+            class="search-input"
+            placeholder="找些什么"
+            v-model="searchInput"
+            @keyup.enter="goForSearch"
+          />
+        </div>
       </div>
-      <div class="search-right">
-        <input
-          class="search-input"
-          placeholder="找些什么"
-          v-model="searchInput"
-          @keyup.enter="goForSearch"
-        />
+      <div class="divider"></div>
+      <div
+        :style="{
+          height: this.fullScreenHeight - 55 + 'px',
+          'overflow-y': 'scroll',
+        }"
+        class="focus-scroll"
+      >
+        <div
+          v-show="!isSearch"
+          v-for="(chatUserInfo, index) in chatUserInfos"
+          :key="index"
+          @click="selectListInfo(index)"
+        >
+          <ChatListInfo
+            :chatUserInfo="chatUserInfo.targetUser"
+            :createAt="chatUserInfo.createAt"
+          />
+        </div>
+        <div v-show="isSearch" class="search-list">
+          <div class="out-of-search-list">
+            <i class="el-icon-arrow-left leftArrow" @click="outOfSearch"></i>
+          </div>
+          <div
+            v-for="(searchUserInfo, index) in searchUserInfos"
+            :key="index"
+            @click="selectListInfo(index)"
+          >
+            <ChatListInfo :chatUserInfo="searchUserInfo" />
+          </div>
+        </div>
       </div>
     </div>
-    <div class="divider"></div>
     <div
+      class="column-divider"
       :style="{
-        height: this.fullScreenHeight - 55 + 'px',
-        'overflow-y': 'scroll',
+        height: this.fullScreenHeight + 'px',
       }"
-      class="focus-aside"
-      v-infinite-scroll="load"
-      infinite-scroll-disabled="disabled"
-    >
-      <div v-for="chatUserInfo in chatUserInfos" :key="chatUserInfo.id">
-        <ChatListInfo :chatUserInfo="chatUserInfo" />
-      </div>
-    </div>
+    ></div>
   </div>
 </template>
 
@@ -37,59 +60,103 @@
 import fixMixin from "@/components/fixMixin.vue";
 import ChatListInfo from "@/components/ChatListInfo.vue";
 import searchApi from "@/axios/search.js";
+import chatApi from "@/axios/chat.js";
 export default {
   components: {
     ChatListInfo,
   },
+  watch: {
+    statusChatList() {
+      this.loadChatListInfo();
+    },
+  },
   data() {
     return {
+      // 是否正在搜索
+      isSearch: false,
       // 搜索框内容
       searchInput: "",
+      // 搜索到的用户消息
+      searchUserInfos: null,
       /* 测试用 */
       tests: {
         nickname: "ayy",
-        datetime: "2022-5-16 21:21:39",
-        userAvatar: this.$store.state.userInfo.avatarUrl,
+        avatarUrl: this.$store.state.userInfo.avatarUrl,
       },
+      /* 测试用 */
+      // createAt: "2022-5-16 21:21:39",
+      createAt: "2022-04-18T12:44:37.000+0000",
       // 聊天集合用户信息
-      chatUserInfos: [],
+      chatUserInfos: null,
+      // 被选中的聊天用户
+      selectedUserInfo: null,
     };
-  },
-  computed: {
-    disabled() {
-      return false;
-    },
   },
   // 混入组件，生命周期、函数、data都混进来
   mixins: [fixMixin],
   created() {},
+  computed: {
+    statusChatList() {
+      return this.$store.state.isUpdateChatList;
+    },
+  },
   methods: {
-    // 监听输入框的enter事件【需要修改】
+    // 监听输入框的enter事件，按下即为搜索【需要修改】
     async goForSearch() {
+      // 将搜索状态变更为true
+      this.isSearch = true;
       // 根据nickname进行搜索
       this.isLoading = true;
       let resData = await searchApi.searchByNickname(this.searchInput);
       resData = resData.data;
       // 获取信息成功
       if (resData.code == 2020) {
-        this.userInfos = resData.data.userInfoDtos;
+        this.searchUserInfos = resData.data.userInfoDtos;
       }
       // 获取信息失败(没找到相关数据的意思)
       else {
-        this.userInfos = null;
+        this.searchUserInfos = null;
       }
       this.isLoading = false;
     },
-    load() {
-      this.chatUserInfos.push(this.tests);
-      console.log("I COMING IN " + new Date().getTime());
+    // 获取聊天列表信息
+    async loadChatListInfo() {
+      let userId = this.$store.state.userInfo.id;
+      let resData = await chatApi.getChatList(userId);
+      resData = resData.data;
+      // 获取信息成功
+      if (resData.code == 2022) {
+        this.chatUserInfos = resData.data.chatDtos;
+      }
+      // 获取信息失败
+      else {
+        this.$message.info(resData.msg);
+      }
+    },
+    // 离开搜索
+    outOfSearch() {
+      this.isSearch = false;
+    },
+    // 选择聊天列表中的用户，并更新Vuex里的选中用户
+    selectListInfo(index) {
+      if (!this.isSearch) this.selectedUserInfo = this.chatUserInfos[index];
+      else this.selectedUserInfo = this.searchUserInfos[index];
+      this.$store.commit("setSelectedUserInfo", this.selectedUserInfo);
     },
   },
 };
 </script>
 
 <style scoped>
+.container {
+  display: flex;
+}
 .chat-container {
+  /* border-right: #e6e6e6 1px solid; */
+  flex-grow: 1;
+}
+
+.column-divider {
   border-right: #e6e6e6 1px solid;
 }
 
@@ -144,13 +211,21 @@ export default {
   padding: 5px;
 }
 
-.focus-aside::-webkit-scrollbar {
-  /* display: none; */
+.focus-scroll::-webkit-scrollbar {
   width: 10px;
 }
 
-.focus-aside::-webkit-scrollbar-thumb {
+.focus-scroll::-webkit-scrollbar-thumb {
   border-radius: 5px;
   background: #eee;
+}
+
+.out-of-search-list {
+  height: 18px;
+  width: 100%;
+}
+
+.leftArrow {
+  cursor: pointer;
 }
 </style>

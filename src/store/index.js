@@ -22,6 +22,8 @@ export default new Vuex.Store({
       birthday: "",
     },
     genderArray: ["female", "male", "others"],
+    selectedUserInfo: null,
+    isUpdateChatList: false,
   },
   mutations: {
     setMenuName(state, _index) {
@@ -33,6 +35,13 @@ export default new Vuex.Store({
     initUserInfo(state, _userInfo) {
       state.userInfo = _userInfo;
     },
+    setSelectedUserInfo(state, _selectedUserInfo) {
+      state.selectedUserInfo = _selectedUserInfo;
+    },
+    // 更新ChatList
+    updateChatList(state) {
+      state.isUpdateChatList = !isUpdateChatList;
+    }
   },
   actions: {
   },

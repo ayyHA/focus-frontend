@@ -17,25 +17,41 @@
       <el-tabs v-model="activeTabName" stretch="true">
         <el-tab-pane label="相关用户" name="byUser">
           <div
-            v-loading="isLoading"
-            v-for="userInfo in userInfos"
-            :key="userInfo.id"
+            :style="{
+              height: this.fullScreenHeight - 141 + 'px',
+              'overflow-y': 'auto',
+            }"
+            class="focus-scroll"
           >
-            <UserShow :userInfo="userInfo" />
+            <div
+              v-loading="isLoading"
+              v-for="userInfo in userInfos"
+              :key="userInfo.id"
+            >
+              <UserShow :userInfo="userInfo" />
+            </div>
           </div>
         </el-tab-pane>
         <el-tab-pane label="相关讯息" name="byMessage">
           <div
-            v-loading="isLoading"
-            v-for="message in messageInfos"
-            :key="message.messageDto.id"
+            :style="{
+              height: this.fullScreenHeight - 141 + 'px',
+              'overflow-y': 'auto',
+            }"
+            class="focus-scroll"
           >
-            <MessageShow
-              :user="message.userInfoDto"
-              :message="message.messageDto"
-              :operateCount="message.messagePublicDataDto"
-              :operateStatus="message.messageStatusDto"
-            />
+            <div
+              v-loading="isLoading"
+              v-for="message in messageInfos"
+              :key="message.messageDto.id"
+            >
+              <MessageShow
+                :user="message.userInfoDto"
+                :message="message.messageDto"
+                :operateCount="message.messagePublicDataDto"
+                :operateStatus="message.messageStatusDto"
+              />
+            </div>
           </div>
         </el-tab-pane>
       </el-tabs>
@@ -44,6 +60,7 @@
 </template>
 
 <script>
+import fixMixin from "@/components/fixMixin.vue";
 import UserShow from "@/components/UserShow.vue";
 import MessageShow from "@/components/MessageShow.vue";
 import searchApi from "@/axios/search.js";
@@ -66,6 +83,8 @@ export default {
       isLoading: false,
     };
   },
+  // 混入组件，生命周期、函数、data都混进来
+  mixins: [fixMixin],
   methods: {
     // 监听输入框的enter事件
     async goForSearch() {
@@ -142,5 +161,14 @@ export default {
   background: none;
   outline: none;
   border: 0px;
+}
+
+.focus-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.focus-scroll::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #eee;
 }
 </style>

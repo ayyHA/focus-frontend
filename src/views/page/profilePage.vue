@@ -190,6 +190,6 @@ export default {
   height: 150px;
 }
 
-.profile-header ::v-deep .el-image:hover {
-}
+/* .profile-header ::v-deep .el-image:hover {
+} */
 </style>

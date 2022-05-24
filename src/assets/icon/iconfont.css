@@ -1,8 +1,8 @@
 @font-face {
   font-family: "iconfont"; /* Project id 3293574 */
-  src: url('iconfont.woff2?t=1649190135885') format('woff2'),
-       url('iconfont.woff?t=1649190135885') format('woff'),
-       url('iconfont.ttf?t=1649190135885') format('truetype');
+  src: url('iconfont.woff2?t=1652789803915') format('woff2'),
+       url('iconfont.woff?t=1652789803915') format('woff'),
+       url('iconfont.ttf?t=1652789803915') format('truetype');
 }
 
 .iconfont {
@@ -13,19 +13,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.focus-icon-xiaolian:before {
+  content: "\ec80";
+}
+
 .focus-icon-zhuanfa:before {
   content: "\e6c9";
 }
 .focus-icon-zhuanfa:hover{
-  content: "\e6c9";
-  color: lightgreen;
+  content: "\e6c9";
+  color:lightgreen;
 }
 
 .focus-icon-pinglun2:before {
   content: "\e60a";
-} 
+}
 .focus-icon-pinglun2:hover{
-  content: "\e60a";
+  content: "\e60a";
   color:cornflowerblue;
 }
 

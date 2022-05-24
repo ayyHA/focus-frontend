@@ -1,7 +1,11 @@
 <template>
   <div
     v-loading="isLoading"
-    :style="{ height: this.fullScreenHeight - 67 + 'px' }"
+    :style="{
+      height: this.fullScreenHeight - 77 + 'px',
+      'overflow-y': 'auto',
+    }"
+    class="focus-scroll"
   >
     <div v-for="likeDto in likeDtos" :key="likeDto.messageDto.id">
       <NotificationShow
@@ -43,5 +47,13 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
+.focus-scroll::-webkit-scrollbar {
+  width: 10px;
+}
+
+.focus-scroll::-webkit-scrollbar-thumb {
+  border-radius: 5px;
+  background: #eee;
+}
 </style>

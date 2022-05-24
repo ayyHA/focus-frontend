@@ -33,7 +33,7 @@ export default {
       console.log(resData);
       if (resData.code == 200) {
         let newsBasic = resData.newslist;
-        // 将报纸类的新闻拿三条放置到this.newsList中
+        // 将报纸类的新闻拿五条放置到this.newsList中
         for (let news of newsBasic) {
           let source = String(news.source);
           if (
@@ -45,7 +45,7 @@ export default {
           ) {
             this.newsList.push(news);
           }
-          if (this.newsList.length == 3) {
+          if (this.newsList.length == 5) {
             console.log("newsBasic", newsBasic);
             console.log("newsList", this.newsList);
             return;
