@@ -13,14 +13,9 @@
       <div class="divider"></div>
       <div class="chat-content-history focus-scroll" style="overflow-y: scroll">
         <div class="history-content">
-          <div><ChatContentInfo :isSelf="true" /></div>
-          <div><ChatContentInfo :isSelf="false" /></div>
-          <div><ChatContentInfo :isSelf="false" /></div>
-          <div><ChatContentInfo :isSelf="false" /></div>
-          <div><ChatContentInfo :isSelf="false" /></div>
-          <div><ChatContentInfo :isSelf="true" /></div>
-          <div><ChatContentInfo :isSelf="true" /></div>
-          <div><ChatContentInfo :isSelf="true" /></div>
+          <div v-for="(chatInfo, index) in chatInfos" :key="index">
+            <ChatContentInfo :isSelf="isSelfs[index]" :chatInfo="chatInfo" />
+          </div>
         </div>
       </div>
       <div class="chat-content-input">
@@ -73,6 +68,7 @@
 <script>
 import fixMixin from "@/components/fixMixin.vue";
 import ChatContentInfo from "@/components/ChatContentInfo.vue";
+import chatApi from "@/axios/chat.js";
 const appData = require("../../public/emoji.json");
 export default {
   components: {
@@ -84,6 +80,8 @@ export default {
       faceList: [],
       chatTextarea: "",
       wsClient: null,
+      chatInfos: [],
+      isSelfs: [],
     };
   },
   watch: {
@@ -95,6 +93,7 @@ export default {
   // 混入组件，生命周期、函数、data都混进来
   mixins: [fixMixin],
   created() {
+    // 初始化websocket连接
     this.initWSClient();
   },
   mounted() {
@@ -135,9 +134,13 @@ export default {
     },
     // 发送消息
     sendInfo() {
+      if (this.chatTextarea.trim() == "") {
+        this.$message.error("消息为空，不可以发送");
+        return;
+      }
       let sourceId = this.$store.state.userInfo.id;
-      let targetId = this.selectedUserInfo.targetUser.id;
-      let createAt = new Date.now();
+      let targetId = this.selectedUserInfo.id;
+      let createAt = Date.now();
       let chatEntityObject = this.setChatEntityJSON(
         sourceId,
         targetId,
@@ -147,19 +150,39 @@ export default {
       // 发送消息
       this.wsClient.send(JSON.stringify(chatEntityObject));
       this.chatTextarea = "";
-      // console.log(this.chatTextarea);
-      // this.chatTextarea = "";
     },
     // 获取历史聊天记录
-    getChatHistory() {
-      console.log(
-        "哈哈测试当前选中的用户是：" + this.selectedUserInfo.nickname
-      );
+    async getChatHistory() {
+      this.chatInfos = [];
+      this.isSelfs = [];
+      let userId = this.$store.state.userInfo.id;
+      let talkId = this.selectedUserInfo.id;
+      console.log(this.selectedUserInfo.nickname);
+      let resData = await chatApi.getChatHistory(userId, talkId);
+      resData = resData.data;
+      if (resData.code == 2024) {
+        let chatDtos = resData.data.chatDtos;
+        for (let idx in chatDtos) {
+          let chatDto = chatDtos[idx];
+          console.log(chatDto);
+          let sourceId = chatDto.sourceUser.id;
+          if (sourceId == userId) {
+            this.isSelfs.push(true);
+          } else {
+            this.isSelfs.push(false);
+          }
+          chatDto.createAt = this.transformTimestamp(chatDto.createAt);
+          this.chatInfos.push(chatDto);
+        }
+      } else {
+        this.chatInfos = [];
+        this.isSelfs = [];
+      }
     },
     // 初始化websockt连接
     initWSClient() {
       const userId = this.$store.state.userInfo.id;
-      const wsUri = "ws://localhost:9000/chat/home/" + userId;
+      const wsUri = "ws://localhost:9006/home/" + userId;
       this.wsClient = new WebSocket(wsUri);
       this.wsClient.onopen = this.wsOnOpen;
       this.wsClient.onclose = this.wsOnClose;
@@ -168,6 +191,8 @@ export default {
     },
     // 建立连接
     wsOnOpen() {
+      // 重设当前的聊天用户为null
+      this.$store.commit("setSelectedUserInfo", null);
       // 设置ChatList状态，以获取更新后的ChatList
       this.$store.commit("updateChatList");
       console.log("建立聊天的ws连接");
@@ -180,15 +205,25 @@ export default {
     wsOnError() {
       this.initWSClient();
     },
-    // 接收消息
+    // 接收消息,并展示
     wsOnMessage(e) {
-      console.log(e);
+      let chatDto = JSON.parse(e.data);
+      let userId = this.$store.state.userInfo.id;
+      let sourceId = chatDto.sourceUser.id;
+      if (sourceId == userId) {
+        this.isSelfs.push(true);
+      } else {
+        this.isSelfs.push(false);
+      }
+      chatDto.createAt = this.transformTimestamp(chatDto.createAt);
+      this.chatInfos.push(chatDto);
+      this.$store.commit("updateChatList");
     },
 
     // 格式化发送的内容
     setChatEntityJSON(sourceId, targetId, createAt, text) {
       return {
-        ChatId: {
+        chatId: {
           sourceId: sourceId,
           targetId: targetId,
         },
@@ -196,6 +231,26 @@ export default {
         text: text,
         status: 0,
       };
+    },
+    // 时间转换
+    transformTimestamp(timestamp) {
+      let a = new Date(timestamp).getTime();
+      const date = new Date(a);
+      const Y = date.getFullYear() + "-";
+      const M =
+        (date.getMonth() + 1 < 10
+          ? "0" + (date.getMonth() + 1)
+          : date.getMonth() + 1) + "-";
+      const D =
+        (date.getDate() < 10 ? "0" + date.getDate() : date.getDate()) + "  ";
+      const h =
+        (date.getHours() < 10 ? "0" + date.getHours() : date.getHours()) + ":";
+      const m =
+        date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+      // const s = date.getSeconds(); // 秒
+      const dateString = Y + M + D + h + m;
+      // console.log('dateString', dateString); // > dateString 2021-07-06 14:23
+      return dateString;
     },
   },
 };

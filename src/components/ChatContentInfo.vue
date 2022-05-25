@@ -3,22 +3,28 @@
     <div v-show="isSelf">
       <div class="self-user">
         <div class="chat-avatar">
-          <el-image class="user-avatar" :src="avatarUrl"></el-image>
+          <el-image
+            class="user-avatar"
+            :src="chatInfo.sourceUser.avatarUrl"
+          ></el-image>
         </div>
         <div class="chat-self-part">
-          <div class="part-self-content">{{ text }}</div>
-          <div class="part-self-date">{{ createAt }}</div>
+          <div class="part-self-content">{{ chatInfo.text }}</div>
+          <div class="part-self-date">{{ chatInfo.createAt }}</div>
         </div>
       </div>
     </div>
     <div v-show="!isSelf">
       <div class="chat-user">
         <div class="chat-avatar">
-          <el-image class="user-avatar" :src="avatarUrl"></el-image>
+          <el-image
+            class="user-avatar"
+            :src="chatInfo.sourceUser.avatarUrl"
+          ></el-image>
         </div>
         <div class="chat-part">
-          <div class="part-content">{{ text }}</div>
-          <div class="part-date">{{ createAt }}</div>
+          <div class="part-content">{{ chatInfo.text }}</div>
+          <div class="part-date">{{ chatInfo.createAt }}</div>
         </div>
       </div>
     </div>
@@ -32,13 +38,13 @@ export default {
       type: Boolean,
       require: true,
     },
+    chatInfo: {
+      type: Object,
+      require: true,
+    },
   },
   data() {
-    return {
-      avatarUrl: this.$store.state.userInfo.avatarUrl,
-      createAt: "2021-05-18 21:22:23",
-      text: "测试一下哈哈😄测试一下哈哈😄测试一下哈哈😄测试一下哈哈😄真的吗😫",
-    };
+    return {};
   },
 };
 </script>
@@ -71,6 +77,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   margin-right: 200px;
+  align-items: flex-start;
 }
 
 .chat-self-part {
@@ -78,6 +85,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   margin-left: 200px;
+  align-items: flex-end;
 }
 
 .part-self-content {

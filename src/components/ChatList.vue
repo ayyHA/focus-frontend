@@ -135,12 +135,18 @@ export default {
     },
     // 离开搜索
     outOfSearch() {
+      // 设置ChatList状态，以获取更新后的ChatList
+      this.$store.commit("updateChatList");
       this.isSearch = false;
     },
     // 选择聊天列表中的用户，并更新Vuex里的选中用户
     selectListInfo(index) {
-      if (!this.isSearch) this.selectedUserInfo = this.chatUserInfos[index];
-      else this.selectedUserInfo = this.searchUserInfos[index];
+      if (!this.isSearch) {
+        let chatUserInfo = this.chatUserInfos[index];
+        this.selectedUserInfo = chatUserInfo.targetUser;
+      } else {
+        this.selectedUserInfo = this.searchUserInfos[index];
+      }
       this.$store.commit("setSelectedUserInfo", this.selectedUserInfo);
     },
   },

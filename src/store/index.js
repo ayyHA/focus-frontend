@@ -40,7 +40,7 @@ export default new Vuex.Store({
     },
     // 更新ChatList
     updateChatList(state) {
-      state.isUpdateChatList = !isUpdateChatList;
+      state.isUpdateChatList = !state.isUpdateChatList;
     }
   },
   actions: {

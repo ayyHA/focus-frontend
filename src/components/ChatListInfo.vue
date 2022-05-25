@@ -23,14 +23,14 @@ export default {
       require: false,
     },
   },
+  watch: {
+    createAt() {
+      if (this.createAt != null)
+        this.createAt = this.transformTimestamp(this.createAt);
+    },
+  },
   data() {
-    return {
-      // chatUserInfo: {
-      //   nickname: "ayy",
-      //   datetime: "2022-5-16 21:21:39",
-      //   userAvatar: this.$store.state.userInfo.avatarUrl,
-      // },
-    };
+    return {};
   },
   created() {
     if (this.createAt != null)
