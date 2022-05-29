@@ -24,6 +24,7 @@
           >设置个人信息</el-button
         >
         <ProfileEditInfo ref="profileEditInfo" />
+        <SignButton class="profile-bottom-sign" />
         <div class="profile-bottom-name">
           <div class="nickname">
             {{ profileNickname }}
@@ -70,13 +71,14 @@ import CutPortrait from "@/components/CutPortrait.vue";
 import CutBackground from "@/components/CutBackground.vue";
 import ProfileEditInfo from "@/components/profileEditInfo.vue";
 import VueHoverMask from "@/components/VueHoverMask.vue";
-
+import SignButton from "@/components/SignButton.vue";
 export default {
   components: {
     CutPortrait,
     ProfileEditInfo,
     CutBackground,
     VueHoverMask,
+    SignButton,
   },
   data() {
     return {};
@@ -162,7 +164,7 @@ export default {
 
 .profile-bottom-button {
   float: right;
-  margin: 10px 10px;
+  margin: 10px 5px;
   border-radius: 25px;
 }
 
@@ -188,6 +190,11 @@ export default {
 .profile-header ::v-deep .el-image {
   width: 700px;
   height: 150px;
+}
+
+.profile-bottom-sign {
+  float: right;
+  margin: 10px 5px;
 }
 
 /* .profile-header ::v-deep .el-image:hover {

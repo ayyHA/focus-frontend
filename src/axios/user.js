@@ -33,10 +33,34 @@ const updateUserDetails = async (userInfoDto) => {
     });
 }
 
+const getSignStatus = async (userId, date) => {
+    return instance.request({
+        method: 'get',
+        params: {
+            userId: userId,
+            date: date,
+        },
+        url: "/user/getSignStatus",
+    });
+}
+
+const doSign = async (userId, date) => {
+    return instance.request({
+        method: 'get',
+        params: {
+            userId: userId,
+            date: date,
+        },
+        url: "/user/doSign",
+    });
+}
+
 export default {
     getUserInfo,
     uploadAvatar,
     uploadBackground,
     updateUserDetails,
+    getSignStatus,
+    doSign,
 }
 
