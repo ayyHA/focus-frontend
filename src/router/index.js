@@ -98,7 +98,8 @@ router.beforeEach(async (to, from, next) => {
   console.log("dunDunCoin", store.state.userInfo.dunDunCoin);
   console.log("birthday", store.state.userInfo.birthday);
   console.log("gender", store.state.userInfo.gender);
-  console.log("CreatAt", store.state.userInfo.createAt);
+  console.log("creatAt", store.state.userInfo.createAt);
+  console.log("pinnedMessageId", store.state.userInfo.pinnedMessageId);
   //**** 
   /* 当用户有token且将去login，跳到首页；否则去用户想去的路径 */
   if (to.name === "Login") {

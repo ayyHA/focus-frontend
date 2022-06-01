@@ -3,6 +3,9 @@
     <div class="div-both-slides">
       <div class="div-box">
         <div class="div-box-left">
+          <div v-if="showPinnedIcon" class="pinned-icon-container">
+            <i class="iconfont focus-icon-zhiding"></i>
+          </div>
           <div class="div-avatar">
             <el-image
               :src="user.avatarUrl"
@@ -11,6 +14,7 @@
           </div>
         </div>
         <div class="div-box-right">
+          <div v-if="showPinnedIcon" class="pinned-icon-text">置顶消息</div>
           <div class="div-user-info">
             <div style="font-weight: 600">{{ user.nickname }}</div>
             <div style="color: #888">
@@ -144,6 +148,11 @@ export default {
       //   };
       // },
     },
+    showPinnedIcon: {
+      type: Boolean,
+      require: false,
+      default: false,
+    },
   },
   data() {
     return {
@@ -266,6 +275,8 @@ export default {
 }
 .div-box-left {
   margin-right: 12px;
+  display: flex;
+  flex-direction: column;
 }
 .div-avatar {
   width: 48px;
@@ -353,5 +364,22 @@ export default {
 .message-keyword {
   color: cornflowerblue;
   cursor: pointer;
+}
+
+.pinned-icon-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 5px;
+}
+
+.focus-icon-zhiding {
+  color: #536471;
+}
+
+.pinned-icon-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: #536471;
+  padding-bottom: 5px;
 }
 </style>

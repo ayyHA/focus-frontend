@@ -57,6 +57,25 @@ const getLikeData = async (userId) => {
     });
 }
 
+const getUserMessages = async (authorId, pageNum) => {
+    return instance.request({
+        method: "get",
+        url: '/message/getMessagesByAuthorId',
+        params: {
+            authorId: authorId,
+            pageNum: pageNum,
+        }
+    });
+}
+
+const getPinnedMessage = async (userId) => {
+    return instance.request({
+        method: 'get',
+        url: '/message/getPinnedMessage',
+        params: { userId: userId },
+    });
+}
+
 export default {
     uploadMultiPictures,
     publishMessage,
@@ -64,4 +83,6 @@ export default {
     saveLike,
     saveUnlike,
     getLikeData,
+    getUserMessages,
+    getPinnedMessage,
 }

@@ -163,7 +163,7 @@ export default {
     pinnedMessageId() {
       if (this.userInfoForm.pinned_message_id == "")
         this.userInfoForm.pinned_message_id =
-          this.$store.state.userInfo.pinned_message_id;
+          this.$store.state.userInfo.pinnedMessageId;
       return this.userInfoForm.pinned_message_id;
     },
   },
