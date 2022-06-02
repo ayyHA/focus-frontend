@@ -9,7 +9,8 @@
           <div class="div-avatar">
             <el-image
               :src="user.avatarUrl"
-              style="border-radius: 50%"
+              @click="jumpToUserDetail"
+              class="div-user-avatar"
             ></el-image>
           </div>
         </div>
@@ -248,6 +249,15 @@ export default {
         this.operateCount.likeCount = res.data.likeCount;
       }
     },
+    // 跳转到用户详情页
+    jumpToUserDetail() {
+      let userId = this.user.id;
+      // 当点击的用户是自己
+      if (userId == this.$store.state.userInfo.id)
+        this.$router.push({ path: "/profile" });
+      // 当点击的用户是他人
+      else this.$router.push({ name: "UserDetail", params: { userId } });
+    },
   },
 };
 </script>
@@ -381,5 +391,10 @@ export default {
   font-weight: 500;
   color: #536471;
   padding-bottom: 5px;
+}
+
+.div-user-avatar {
+  border-radius: 50%;
+  cursor: pointer;
 }
 </style>

@@ -87,7 +87,8 @@ export default {
   },
   computed: {
     activeIndex() {
-      return this.$store.state.menuHeader.indexOf(this.$store.state.menuName);
+      if (this.$store.state.menuName != null)
+        return this.$store.state.menuHeader.indexOf(this.$store.state.menuName);
     },
     thumbSrc() {
       return this.$store.state.userInfo.avatarUrl;

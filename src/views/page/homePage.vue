@@ -1,12 +1,13 @@
 <template>
   <div
     :style="{
-      height: this.fullScreenHeight - 88 + 'px',
+      height: this.fullScreenHeight - 68 + 'px',
       'overflow-y': 'scroll',
     }"
     class="el-aside"
     infinite-scroll-disabled="disabled"
     v-infinite-scroll="load"
+    infinite-scroll-distance="5"
   >
     <div v-for="message in messages_" :key="message.messageDto.id">
       <MessageShow
@@ -19,7 +20,7 @@
     <div v-if="scrollLoading">
       <div><center>加载中...</center></div>
     </div>
-    <div v-if="pageBoom || elementTop"><center>没有更多了</center></div>
+    <!-- <div v-if="pageBoom || elementTop"><center>没有更多了</center></div> -->
   </div>
 </template>
 

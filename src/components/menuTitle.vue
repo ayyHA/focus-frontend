@@ -1,5 +1,8 @@
 <template>
-  <div class="divider" v-if="title != '搜索' && title != '聊天'">
+  <div
+    class="divider"
+    v-if="title != '搜索' && title != '聊天' && title != null"
+  >
     <div class="menuTitle menuMargin">
       {{ title }}
     </div>
@@ -11,7 +14,7 @@
 export default {
   computed: {
     title() {
-      return this.$store.state.menuName;
+      if (this.$store.state.menuName != null) return this.$store.state.menuName;
     },
   },
 };

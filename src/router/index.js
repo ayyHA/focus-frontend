@@ -48,7 +48,12 @@ const routes = [
         component: () => import('@/views/page/profilePage.vue'),
         meta: { menu: "4" },
       },
-
+      {
+        path: '/userDetail/:userId',
+        name: "UserDetail",
+        component: () => import('@/views/page/userDetailPage.vue'),
+        meta: { menu: "5" },
+      },
     ],
   },
 

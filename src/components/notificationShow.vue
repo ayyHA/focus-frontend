@@ -1,7 +1,11 @@
 <template>
   <div>
     <div class="box">
-      <el-image class="box-image" :src="user.avatarUrl"></el-image>
+      <el-image
+        class="box-image"
+        :src="user.avatarUrl"
+        @click="jumpToUserDetail"
+      ></el-image>
       <div class="content-container">
         <div>
           <span class="content-nickname">{{ user.nickname }}</span>
@@ -63,6 +67,15 @@ export default {
       // console.log('dateString', dateString); // > dateString 2021-07-06 14:23
       return dateString;
     },
+    // 跳转到用户详情页
+    jumpToUserDetail() {
+      let userId = this.user.id;
+      // 当点击的用户是自己
+      if (userId == this.$store.state.userInfo.id)
+        this.$router.push({ path: "/profile" });
+      // 当点击的用户是他人
+      else this.$router.push({ name: "UserDetail", params: { userId } });
+    },
   },
 };
 </script>
@@ -80,6 +93,7 @@ export default {
   height: 40px;
   margin: 0px 10px;
   margin-left: 40px;
+  cursor: pointer;
 }
 
 .content-container {

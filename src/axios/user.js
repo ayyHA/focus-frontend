@@ -55,6 +55,49 @@ const doSign = async (userId, date) => {
     });
 }
 
+const getUserInfoById = async (userId) => {
+    return instance.request({
+        method: 'get',
+        params: { userId: userId },
+        url: "/user/getUserInfoDtoById",
+    });
+}
+
+const getFollowStatus = async (sourceId, targetId) => {
+    return instance.request({
+        method: "get",
+        params: {
+            sourceId: sourceId,
+            targetId: targetId,
+        },
+        url: "/user/friend/getFollowStatus",
+    });
+}
+
+const followUser = async (sourceId, targetId, date) => {
+    return instance.request({
+        method: "post",
+        params: {
+            sourceId: sourceId,
+            targetId: targetId,
+            date: date,
+        },
+        url: "/user/friend/followUser",
+    });
+}
+
+const unFollowUser = async (sourceId, targetId, date) => {
+    return instance.request({
+        method: "post",
+        params: {
+            sourceId: sourceId,
+            targetId: targetId,
+            date: date,
+        },
+        url: "/user/friend/unFollowUser",
+    });
+}
+
 export default {
     getUserInfo,
     uploadAvatar,
@@ -62,5 +105,9 @@ export default {
     updateUserDetails,
     getSignStatus,
     doSign,
+    getUserInfoById,
+    getFollowStatus,
+    followUser,
+    unFollowUser,
 }
 
