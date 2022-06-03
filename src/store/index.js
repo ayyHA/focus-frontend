@@ -41,7 +41,11 @@ export default new Vuex.Store({
     // 更新ChatList
     updateChatList(state) {
       state.isUpdateChatList = !state.isUpdateChatList;
-    }
+    },
+    // 更新盾盾币
+    updateDunDunCoin(state, _coin) {
+      state.userInfo.dunDunCoin += _coin;
+    },
   },
   actions: {
   },

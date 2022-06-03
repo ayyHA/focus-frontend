@@ -46,7 +46,7 @@
         <div class="profile-bottom-detail">
           <el-row style="padding-top: 10px">
             <el-col :span="4" style="font-weight: 600">个人简介</el-col>
-            <el-col :span="20">
+            <el-col :span="15">
               <p
                 style="
                   word-wrap: break-word;
@@ -56,6 +56,10 @@
               >
                 {{ profileDescription }}
               </p>
+            </el-col>
+            <el-col :span="5" class="coin-container">
+              <div style="font-weight: 600">盾盾币：</div>
+              {{ dunDunCoin }}
             </el-col>
           </el-row>
         </div>
@@ -161,6 +165,9 @@ export default {
     },
     disabled() {
       return this.scrollLoading || this.pageBoom || this.elementTop;
+    },
+    dunDunCoin() {
+      return this.$store.state.userInfo.dunDunCoin;
     },
   },
   // 混入组件，生命周期、函数、data都混进来
@@ -346,6 +353,12 @@ export default {
 .no-publish-style {
   font-size: 48px;
   color: #bbb;
+}
+
+.coin-container {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
 }
 /* .profile-header ::v-deep .el-image:hover {
 } */

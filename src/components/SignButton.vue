@@ -63,6 +63,7 @@ export default {
         this.signInfo = resData.data;
         this.showSignDialog = true;
         this.isSign = true;
+        this.$store.commit("updateDunDunCoin", this.signInfo.signDunDunCoin);
       }
       // 今日已签到提示消息
       else {

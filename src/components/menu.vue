@@ -47,7 +47,7 @@
         type="primary"
         round
         @click="clickMessageButton"
-        >讯息</el-button
+        >消息</el-button
       >
       <MessageEdit ref="messageEditDialog" />
     </el-menu>

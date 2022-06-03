@@ -3,9 +3,10 @@
     title="编辑个人信息"
     :visible.sync="showFormVariable"
     width="500px"
+    class="profile-dialog"
   >
     <el-form :model="userInfoForm" ref="userInfoForm" label-width="100px">
-      <el-form-item label="昵称" prop="nickname">
+      <el-form-item label="昵称" prop="nickname" class="item-style">
         <el-input
           v-model="userInfoForm.nickname"
           v-if="isEditNickname"
@@ -19,7 +20,7 @@
           }}<i class="iconfont focus-icon-bianji" @click="clickNickname"></i
         ></span>
       </el-form-item>
-      <el-form-item label="性别" prop="gender">
+      <el-form-item label="性别" prop="gender" class="item-style">
         <el-select
           v-if="isEditGender"
           v-model="genderType"
@@ -40,7 +41,7 @@
           }}<i class="iconfont focus-icon-bianji" @click="clickGender"></i
         ></span>
       </el-form-item>
-      <el-form-item label="生日" prop="birthday">
+      <el-form-item label="生日" prop="birthday" class="item-style">
         <el-date-picker
           v-if="isEditBirthday"
           v-model="userInfoForm.birthday"
@@ -55,7 +56,7 @@
           }}<i class="iconfont focus-icon-bianji" @click="clickBirthday"></i
         ></span>
       </el-form-item>
-      <el-form-item label="个人简介" prop="description">
+      <el-form-item label="个人简介" prop="description" class="item-style">
         <el-input
           v-if="isEditDescription"
           v-model="userInfoForm.description"
@@ -71,7 +72,11 @@
           }}<i class="iconfont focus-icon-bianji" @click="clickDescription"></i
         ></span>
       </el-form-item>
-      <el-form-item label="置顶讯息" prop="pinned_message_id">
+      <el-form-item
+        label="置顶消息"
+        prop="pinned_message_id"
+        class="item-style"
+      >
         <el-input
           v-if="isEditPinnedMessageId"
           v-model="userInfoForm.pinned_message_id"
@@ -263,6 +268,10 @@ export default {
 </script>
 
 <style scoped>
+.profile-dialog ::v-deep .el-dialog {
+  border-radius: 8px;
+}
+
 span {
   line-height: 36px;
 }
@@ -273,5 +282,9 @@ span i:hover {
   border-radius: 100%;
   background-color: #dcdcdc;
   transition: linear 0.2s;
+}
+
+.item-style ::v-deep .el-form-item__label {
+  font-weight: 600;
 }
 </style>

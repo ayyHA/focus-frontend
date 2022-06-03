@@ -16,7 +16,7 @@
       </div>
       <div class="profile-bottom">
         <FollowButton class="profile-bottom-follow" :userId="userId" />
-        <PayButton class="profile-bottom-pay" />
+        <PayButton class="profile-bottom-pay" :userId="userId" />
         <div class="profile-bottom-name">
           <div class="nickname" v-if="userInfo">
             {{ profileNickname }}
