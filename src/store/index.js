@@ -24,6 +24,7 @@ export default new Vuex.Store({
     genderArray: ["female", "male", "others"],
     selectedUserInfo: null,
     isUpdateChatList: false,
+    deleteMessageId: null,
   },
   mutations: {
     setMenuName(state, _index) {
@@ -45,6 +46,10 @@ export default new Vuex.Store({
     // 更新盾盾币
     updateDunDunCoin(state, _coin) {
       state.userInfo.dunDunCoin += _coin;
+    },
+    // 设置deleteMessageId
+    setDeleteMessageId(state, _messageId) {
+      state.deleteMessageId = _messageId;
     },
   },
   actions: {

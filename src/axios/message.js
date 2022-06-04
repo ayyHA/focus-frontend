@@ -76,6 +76,14 @@ const getPinnedMessage = async (userId) => {
     });
 }
 
+const deleteMessageById = async (messageId) => {
+    return instance.request({
+        method: 'delete',
+        url: '/message/deleteMessageById',
+        params: { messageId },
+    });
+}
+
 export default {
     uploadMultiPictures,
     publishMessage,
@@ -85,4 +93,5 @@ export default {
     getLikeData,
     getUserMessages,
     getPinnedMessage,
+    deleteMessageById,
 }

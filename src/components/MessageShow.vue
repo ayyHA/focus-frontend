@@ -16,7 +16,18 @@
         </div>
         <div class="div-box-right">
           <div v-if="showPinnedIcon" class="pinned-icon-text">置顶消息</div>
-          <div class="div-user-info">
+          <div v-if="isProfile" class="div-user-operate">
+            <div class="div-user-info">
+              <div style="font-weight: 600">{{ user.nickname }}</div>
+              <div style="color: #888">
+                @{{ user.username }} · {{ message.createAt }}
+              </div>
+            </div>
+            <div class="div-operate-info">
+              <MessageDeleteButton :msgId="message.id" />
+            </div>
+          </div>
+          <div v-else class="div-user-info">
             <div style="font-weight: 600">{{ user.nickname }}</div>
             <div style="color: #888">
               @{{ user.username }} · {{ message.createAt }}
@@ -100,7 +111,11 @@
 
 <script>
 import messageApi from "@/axios/message.js";
+import MessageDeleteButton from "@/components/MessageDeleteButton.vue";
 export default {
+  components: {
+    MessageDeleteButton,
+  },
   props: {
     //传入的数据
     // 讯息发送者基本信息
@@ -184,7 +199,11 @@ export default {
       this.formatKeywords = this.message.keywords.split(",");
     }
   },
-
+  computed: {
+    isProfile() {
+      return "个人中心" == this.$store.state.menuName;
+    },
+  },
   methods: {
     // 时间转换
     transformTimestamp(timestamp) {
@@ -396,5 +415,14 @@ export default {
 .div-user-avatar {
   border-radius: 50%;
   cursor: pointer;
+}
+
+.div-user-operate {
+  display: flex;
+  justify-content: space-between;
+}
+
+.div-operate-info {
+  display: flex;
 }
 </style>

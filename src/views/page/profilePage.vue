@@ -123,6 +123,13 @@ export default {
     SignButton,
     MessageShow,
   },
+  watch: {
+    waitDeleteMsgId() {
+      if (this.$store.state.deleteMessageId != null) {
+        this.removeMessage(this.waitDeleteMsgId);
+      }
+    },
+  },
   data() {
     return {
       page: -1,
@@ -168,6 +175,9 @@ export default {
     },
     dunDunCoin() {
       return this.$store.state.userInfo.dunDunCoin;
+    },
+    waitDeleteMsgId() {
+      return this.$store.state.deleteMessageId;
     },
   },
   // 混入组件，生命周期、函数、data都混进来
@@ -246,6 +256,23 @@ export default {
         message.showPinnedIcon = true;
         this.messages_.push(message);
       }
+    },
+    removeMessage(msgId) {
+      // 获取idx
+      let idx;
+      for (let message of this.messages_) {
+        if (message.messageDto.id == msgId) {
+          idx = this.messages_.indexOf(message);
+        }
+      }
+      // 移除元素
+      this.messages_.splice(idx, 1);
+      // 移除元素后若已无消息
+      if (this.messages_.length == 0) {
+        this.noPublishStatus = true;
+      }
+      // 移除完毕，设置deleteMessageId为null
+      this.$store.commit("setDeleteMessageId", null);
     },
   },
 };
