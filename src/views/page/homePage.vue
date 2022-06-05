@@ -18,7 +18,8 @@
       />
     </div>
     <div v-if="scrollLoading">
-      <div><center>加载中...</center></div>
+      <!-- <div><center>加载中...</center></div> -->
+      <div v-loading="isLoading" class="load-style"></div>
     </div>
     <!-- <div v-if="pageBoom || elementTop"><center>没有更多了</center></div> -->
   </div>
@@ -42,6 +43,8 @@ export default {
       scrollLoading: false,
       // 存储多条讯息数据
       messages_: [],
+      // 加载
+      isLoading: false,
     };
   },
   created() {
@@ -54,7 +57,7 @@ export default {
     },
     // message达到上限(规定展示讯息的上限)
     elementTop() {
-      return this.messages_.length >= 10;
+      return this.messages_.length >= this.maxElements;
     },
     disabled() {
       return this.scrollLoading || this.pageBoom || this.elementTop;
@@ -63,6 +66,7 @@ export default {
   methods: {
     async load() {
       this.scrollLoading = true;
+      this.isLoading = true;
       let messageInfos = await messageApi.getMessageInfoList(this.page);
       messageInfos = messageInfos.data;
       console.log(messageInfos);
@@ -70,18 +74,19 @@ export default {
       else if (messageInfos.code == "2012") {
         let messages = messageInfos.data.messageInfoDtos;
         this.messages_.push(...messages);
+        this.isLoading = false;
         this.scrollLoading = false;
         this.page += 1;
         this.maxPages = messages[0].maxPages;
         this.maxElements = messages[0].maxElements;
-        console.log(
-          "page:",
-          this.page,
-          "maxpages:",
-          this.maxPages,
-          "maxElements",
-          this.maxElements
-        );
+        // console.log(
+        //   "page:",
+        //   this.page,
+        //   "maxpages:",
+        //   this.maxPages,
+        //   "maxElements",
+        //   this.maxElements
+        // );
       }
     },
   },
@@ -92,5 +97,9 @@ export default {
 /* 隐藏滚动条 */
 .el-aside::-webkit-scrollbar {
   display: none;
+}
+
+.load-style ::v-deep .el-loading-spinner {
+  margin-top: 0px;
 }
 </style>

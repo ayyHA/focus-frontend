@@ -6,6 +6,9 @@
           <div v-if="showPinnedIcon" class="pinned-icon-container">
             <i class="iconfont focus-icon-zhiding"></i>
           </div>
+          <div v-if="isReply" class="pinned-icon-container">
+            <i class="iconfont focus-icon-31pinglun"></i>
+          </div>
           <div class="div-avatar">
             <el-image
               :src="user.avatarUrl"
@@ -16,6 +19,7 @@
         </div>
         <div class="div-box-right">
           <div v-if="showPinnedIcon" class="pinned-icon-text">置顶消息</div>
+          <div v-if="isReply" class="pinned-icon-text">评论消息</div>
           <div v-if="isProfile" class="div-user-operate">
             <div class="div-user-info">
               <div style="font-weight: 600">{{ user.nickname }}</div>
@@ -83,6 +87,7 @@
               <i
                 class="iconfont focus-icon-pinglun2"
                 style="cursor: pointer"
+                @click="jumpToReply"
               ></i>
               <span>{{ operateCount.replyCount }}</span>
             </div>
@@ -178,6 +183,8 @@ export default {
       likePositionRight: false,
       heartShake: false,
       formatKeywords: null,
+      isReply: false,
+      isRetweet: false,
     };
   },
   created() {
@@ -198,6 +205,10 @@ export default {
       this.message.keywords = String(this.message.keywords);
       this.formatKeywords = this.message.keywords.split(",");
     }
+    // 是否是评论型讯息
+    if (this.message.type == "replied_to") this.isReply = true;
+    // 是否是转发型讯息
+    if (this.message.type == "retweeted") this.isRetweet = true;
   },
   computed: {
     isProfile() {
@@ -276,6 +287,17 @@ export default {
         this.$router.push({ path: "/profile" });
       // 当点击的用户是他人
       else this.$router.push({ name: "UserDetail", params: { userId } });
+    },
+    // 跳转到用户评论页
+    jumpToReply() {
+      let messageInfo = {
+        user: this.user,
+        message: this.message,
+        operateCount: this.operateCount,
+        operateStatus: this.operateStatus,
+      };
+      localStorage.setItem("messageInfo", JSON.stringify(messageInfo));
+      this.$router.push({ name: "Reply" });
     },
   },
 };
@@ -403,6 +425,11 @@ export default {
 
 .focus-icon-zhiding {
   color: #536471;
+}
+
+.focus-icon-31pinglun {
+  color: #536471;
+  font-weight: 500;
 }
 
 .pinned-icon-text {

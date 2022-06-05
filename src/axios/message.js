@@ -84,6 +84,17 @@ const deleteMessageById = async (messageId) => {
     });
 }
 
+const getReplies = async (authorId, messageId) => {
+    return instance.request({
+        method: "get",
+        url: "/message/getReplies",
+        params: {
+            inReplyToAuthorId: authorId,
+            conversationId: messageId,
+        }
+    });
+}
+
 export default {
     uploadMultiPictures,
     publishMessage,
@@ -94,4 +105,5 @@ export default {
     getUserMessages,
     getPinnedMessage,
     deleteMessageById,
+    getReplies,
 }

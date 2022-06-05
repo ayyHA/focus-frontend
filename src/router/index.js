@@ -54,6 +54,13 @@ const routes = [
         component: () => import('@/views/page/userDetailPage.vue'),
         meta: { menu: "5" },
       },
+      {
+        // path: "/reply/:messageInfo",
+        path: "/reply",
+        name: "Reply",
+        component: () => import('@/views/page/replyPage.vue'),
+        meta: { menu: "5" },
+      },
     ],
   },
 

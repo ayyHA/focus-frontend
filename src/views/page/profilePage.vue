@@ -89,7 +89,9 @@
         />
       </div>
       <div v-if="scrollLoading">
-        <div><center v-loading="scrollLoading">加载中...</center></div>
+        <div>
+          <center v-loading="scrollLoading" class="load-style"></center>
+        </div>
       </div>
       <!-- <div v-if="pageBoom || elementTop"><center>没有更多了</center></div> -->
       <div
@@ -386,6 +388,10 @@ export default {
   display: flex;
   justify-content: flex-end;
   padding-right: 10px;
+}
+
+.load-style ::v-deep .el-loading-spinner {
+  margin-top: 0px;
 }
 /* .profile-header ::v-deep .el-image:hover {
 } */
