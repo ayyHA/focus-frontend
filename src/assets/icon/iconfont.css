@@ -64,6 +64,7 @@
 
 .focus-icon-account-circle-line:before {
   content: "\e7b8";
+  font-size: 26px;
 }
 
 .focus-icon-aixin:before {
@@ -96,6 +97,7 @@
 
 .focus-icon-huatifuhao:before {
   content: "\e8b1";
+  font-size: 26px;
 }
 
 .focus-icon-huati:before {
@@ -136,6 +138,7 @@
 
 .focus-icon-shouye:before {
   content: "\e8bb";
+  font-size: 26px;
 }
 
 .focus-icon-sousuo:before {
@@ -160,10 +163,12 @@
 
 .focus-icon-xiaoxi:before {
   content: "\e8c0";
+  font-size: 26px;
 }
 
 .focus-icon-xiaoxizhongxin:before {
   content: "\e8c1";
+  font-size: 26px;
 }
 
 .focus-icon-yanjing:before {

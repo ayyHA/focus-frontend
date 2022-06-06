@@ -8,7 +8,7 @@
     >
       <el-image
         :src="logo"
-        style="width: 100%; height: 50px; margin-top: 10px"
+        style="width: 60%; height: 24px; margin-top: 10px"
         class="logo-style"
         fit="contain"
       ></el-image>
@@ -75,7 +75,7 @@ import MessageEdit from "@/components/MessageEdit.vue";
 export default {
   data() {
     return {
-      logo: require("@/assets/logo.png"),
+      logo: require("@/assets/logo3.png"),
       shake: false,
     };
   },
@@ -146,7 +146,7 @@ span {
 }
 
 .user-thumb {
-  margin: 0px 30%;
+  margin: 0px 28%;
   position: absolute;
   bottom: 50px;
 }

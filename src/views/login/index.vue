@@ -1,86 +1,110 @@
 <template>
   <div class="login-container">
-    <el-form
-      v-show="type === 'login'"
-      ref="loginForm"
-      label-width="80px"
-      class="login-form"
-      status-icon
-      :rules="rules"
-      :model="loginForm"
-    >
-      <h2 class="login-title">登录</h2>
-      <el-form-item label="用户名" prop="username">
-        <el-input
-          prefix-icon="el-icon-user"
-          v-model="loginForm.username"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input
-          prefix-icon="el-icon-lock"
-          v-model="loginForm.password"
-          type="password"
-        ></el-input>
-      </el-form-item>
+    <div class="f-login login-form">
+      <div class="f-login-left">
+        <div class="left-column">
+          <el-image :src="loginPic"></el-image>
+          <div v-if="type === 'register'" class="left-text">
+            加入focus<br />看见不一样的世界
+          </div>
+        </div>
+      </div>
 
-      <el-form-item>
-        <el-button type="primary" @click="submitLoginForm('loginForm')"
-          >登录</el-button
-        >
-        <el-button type="primary" @click="changeToRegister">注册</el-button>
-      </el-form-item>
-    </el-form>
+      <el-form
+        v-show="type === 'login'"
+        ref="loginForm"
+        label-width="80px"
+        status-icon
+        class="f-login-right"
+        :rules="rules"
+        :model="loginForm"
+      >
+        <div class="f-login-form">
+          <h2 class="login-title">登录</h2>
+          <el-form-item prop="username" class="f-form-item">
+            <el-input
+              prefix-icon="el-icon-user"
+              v-model="loginForm.username"
+              placeholder="用户名"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="password" class="f-form-item">
+            <el-input
+              prefix-icon="el-icon-lock"
+              v-model="loginForm.password"
+              type="password"
+              placeholder="密码"
+            ></el-input>
+          </el-form-item>
 
-    <el-form
-      v-show="type === 'register'"
-      ref="registerForm"
-      label-width="80px"
-      class="login-form"
-      status-icon
-      :rules="rules"
-      :model="registerForm"
-    >
-      <h2 class="login-title">注册</h2>
-      <el-form-item label="用户名" prop="username">
-        <el-input
-          prefix-icon="el-icon-user"
-          v-model="registerForm.username"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="密码" prop="password">
-        <el-input
-          prefix-icon="el-icon-lock"
-          v-model="registerForm.password"
-          type="password"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="确认密码" prop="confirmPassword">
-        <el-input
-          prefix-icon="el-icon-lock"
-          v-model="registerForm.confirmPassword"
-          type="password"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="昵称" prop="nickname">
-        <el-input
-          prefix-icon="el-icon-s-custom"
-          v-model="registerForm.nickname"
-        ></el-input>
-      </el-form-item>
-      <el-form-item label="邮箱" prop="email">
-        <el-input
-          prefix-icon="el-icon-message"
-          v-model="registerForm.email"
-        ></el-input>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="changeToLogin">登录</el-button>
-        <el-button type="primary" @click="submitRegisterForm('registerForm')"
-          >注册</el-button
-        >
-      </el-form-item>
-    </el-form>
+          <el-form-item class="f-form-item">
+            <el-button type="primary" @click="submitLoginForm('loginForm')"
+              >登录</el-button
+            >
+            <el-button type="primary" @click="changeToRegister">注册</el-button>
+          </el-form-item>
+        </div>
+      </el-form>
+
+      <el-form
+        v-show="type === 'register'"
+        ref="registerForm"
+        label-width="80px"
+        status-icon
+        class="f-login-right"
+        :rules="rules"
+        :model="registerForm"
+      >
+        <div class="f-register-form">
+          <h2 class="login-title">注册</h2>
+          <el-form-item prop="username" class="f-form-item">
+            <el-input
+              prefix-icon="el-icon-user"
+              v-model="registerForm.username"
+              placeholder="用户名"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="password" class="f-form-item">
+            <el-input
+              prefix-icon="el-icon-lock"
+              v-model="registerForm.password"
+              type="password"
+              placeholder="密码"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="confirmPassword" class="f-form-item">
+            <el-input
+              prefix-icon="el-icon-lock"
+              v-model="registerForm.confirmPassword"
+              type="password"
+              placeholder="确认密码"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="nickname" class="f-form-item">
+            <el-input
+              prefix-icon="el-icon-s-custom"
+              v-model="registerForm.nickname"
+              placeholder="昵称"
+            ></el-input>
+          </el-form-item>
+          <el-form-item prop="email" class="f-form-item">
+            <el-input
+              prefix-icon="el-icon-message"
+              v-model="registerForm.email"
+              placeholder="邮箱"
+            ></el-input>
+          </el-form-item>
+          <el-form-item class="f-form-item">
+            <el-button type="primary" @click="changeToLogin">登录</el-button>
+            <el-button
+              type="primary"
+              @click="submitRegisterForm('registerForm')"
+              >注册</el-button
+            >
+          </el-form-item>
+        </div>
+      </el-form>
+    </div>
   </div>
 </template>
   <script>
@@ -107,6 +131,7 @@ export default {
       callback(new Error("请输入合法的邮箱"));
     };
     return {
+      loginPic: require("@/assets/loginPic.png"),
       type: "login",
       loginForm: { username: "", password: "" },
       registerForm: {
@@ -218,11 +243,8 @@ export default {
 
 <style scoped>
 .login-form {
-  width: 350px;
-  margin: 160px auto; /* 上下间距160px，左右自动居中*/
-  background-color: rgb(255, 255, 255, 0.8); /* 透明背景色 */
-  padding: 30px;
-  border-radius: 20px; /* 圆角 */
+  width: 800px;
+  margin: 120px auto;
 }
 
 /* 背景 */
@@ -230,13 +252,74 @@ export default {
   position: absolute;
   width: 100%;
   height: 100%;
-  background-color: sandybrown;
-  /* background: url("../../assets/login.png"); */
+  background: rgb(172, 240, 187);
+  background: linear-gradient(
+    90deg,
+    rgba(172, 240, 187, 1) 0%,
+    rgba(159, 164, 251, 1) 100%
+  );
 }
 
 /* 标题 */
 .login-title {
   color: #303133;
   text-align: center;
+}
+
+.f-login {
+  display: flex;
+}
+
+.f-login-left {
+  width: 50%;
+  background-color: darkblue;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+  box-shadow: -2px 0px 10px grey, 0px -2px 10px grey, 0px 2px 10px grey;
+}
+
+.left-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.left-text {
+  /* height: 150px; */
+  /* display: flex; */
+  /* align-items: center; */
+  color: mintcream;
+  font-size: 30px;
+  font-weight: 600;
+  line-height: 40px;
+  padding-bottom: 60px;
+}
+
+.f-login-right {
+  width: 50%;
+  background-color: rgb(255, 255, 255);
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+  box-shadow: 2px 0px 10px grey, 0px -2px 10px grey, 0px 2px 10px grey;
+}
+
+.f-login-form {
+  height: 400px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-register-form {
+  height: 540px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.f-form-item ::v-deep .el-form-item__content {
+  margin-left: 0px !important;
 }
 </style>
