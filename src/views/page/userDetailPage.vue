@@ -205,11 +205,11 @@ export default {
   border: 5px solid #fff;
 }
 
-.profile-medium ::v-deep .el-image:hover {
+/* .profile-medium ::v-deep .el-image:hover {
   background-color: #d3d3d3;
   border: 5px solid #d3d3d3;
   transition: all 0.3s linear;
-}
+} */
 
 /* profile四兄弟的控制 */
 .profile-style {

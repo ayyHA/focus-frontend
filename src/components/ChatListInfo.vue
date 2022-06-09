@@ -1,7 +1,11 @@
 <template>
   <div class="chat-list-info-container">
     <div class="chat-list-info-left">
-      <el-image :src="chatUserInfo.avatarUrl" class="userAvatar"></el-image>
+      <el-image
+        :src="chatUserInfo.avatarUrl"
+        class="userAvatar"
+        @click="jumpToUserDetail"
+      ></el-image>
     </div>
     <div class="chat-list-info-right">
       <div class="right-nickname">{{ chatUserInfo.nickname }}</div>
@@ -57,6 +61,15 @@ export default {
       // console.log('dateString', dateString); // > dateString 2021-07-06 14:23
       return dateString;
     },
+    // 跳转到用户详情页
+    jumpToUserDetail() {
+      let userId = this.chatUserInfo.id;
+      // 当点击的用户是自己
+      if (userId == this.$store.state.userInfo.id)
+        this.$router.push({ path: "/profile" });
+      // 当点击的用户是他人
+      else this.$router.push({ name: "UserDetail", params: { userId } });
+    },
   },
 };
 </script>
@@ -81,6 +94,7 @@ export default {
   width: 40px;
   height: 40px;
   border-radius: 15%;
+  cursor: pointer;
 }
 .chat-list-info-right {
   display: flex;

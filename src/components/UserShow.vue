@@ -2,7 +2,11 @@
   <div class="user-info-container">
     <div class="user-info">
       <div class="user-avatar">
-        <el-image class="image-avatar" :src="userInfo.avatarUrl"></el-image>
+        <el-image
+          class="image-avatar"
+          :src="userInfo.avatarUrl"
+          @click="jumpToUserDetail"
+        ></el-image>
       </div>
       <div class="user-basic-info">
         <div class="basic-info">
@@ -12,9 +16,10 @@
             </div>
             <div class="info-username">@{{ userInfo.username }}</div>
           </div>
-          <div class="followButton">
+          <FollowButton :userId="userInfo.id" />
+          <!-- <div class="followButton">
             <el-button type="primary" round>关注</el-button>
-          </div>
+          </div> -->
         </div>
         <div class="user-description">{{ userInfo.description }}</div>
       </div>
@@ -23,7 +28,11 @@
 </template>
 
 <script>
+import FollowButton from "@/components/FollowButton.vue";
 export default {
+  components: {
+    FollowButton,
+  },
   props: {
     userInfo: {
       require: true,
@@ -33,7 +42,17 @@ export default {
   data() {
     return {};
   },
-  methods: {},
+  methods: {
+    // 跳转到用户详情页
+    jumpToUserDetail() {
+      let userId = this.userInfo.id;
+      // 当点击的用户是自己
+      if (userId == this.$store.state.userInfo.id)
+        this.$router.push({ path: "/profile" });
+      // 当点击的用户是他人
+      else this.$router.push({ name: "UserDetail", params: { userId } });
+    },
+  },
 };
 </script>
 
@@ -41,7 +60,7 @@ export default {
 .user-info-container {
   padding: 12px 48px;
   display: flex;
-  cursor: pointer;
+  /* cursor: pointer; */
 }
 
 .user-info-container:hover {
@@ -62,6 +81,7 @@ export default {
   width: 48px;
   height: 48px;
   border-radius: 50%;
+  cursor: pointer;
 }
 
 .user-basic-info {

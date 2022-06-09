@@ -26,7 +26,7 @@
           v-model="genderType"
           placeholder=""
           style="width: 300px"
-          @blur="blurGender"
+          @change="changeGender"
         >
           <el-option
             v-for="item in options"
@@ -81,7 +81,6 @@
           v-if="isEditPinnedMessageId"
           v-model="userInfoForm.pinned_message_id"
           style="width: 300px"
-          placeholder="@username/messageID"
           @blur="blurPinnedMessageId"
         ></el-input>
         <span v-else
@@ -166,7 +165,7 @@ export default {
       return this.userInfoForm.description;
     },
     pinnedMessageId() {
-      if (this.userInfoForm.pinned_message_id == "")
+      if (this.userInfoForm.pinned_message_id == null)
         this.userInfoForm.pinned_message_id =
           this.$store.state.userInfo.pinnedMessageId;
       return this.userInfoForm.pinned_message_id;
@@ -191,7 +190,7 @@ export default {
     clickGender() {
       this.isEditGender = true;
     },
-    blurGender() {
+    changeGender() {
       this.isEditGender = false;
     },
     clickBirthday() {

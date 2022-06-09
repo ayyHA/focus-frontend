@@ -322,6 +322,7 @@ export default {
         let messageId = this.message.id;
         let userId = this.$store.state.userInfo.id;
         let likeNum = this.operateCount.likeCount;
+        console.log("likeNum", likeNum);
         let res = await messageApi.saveLike(messageId, userId, likeNum);
         res = res.data;
         // 更新likeCount数据，与后端实时同步

@@ -42,7 +42,7 @@ export default {
       this.$notify({
         title: "点赞消息",
         message: msg,
-        duration: 10,
+        duration: 3000,
       });
     },
     // 连接成功的回调函数

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="userId != this.$store.state.userInfo.id">
     <el-button v-if="!isFollow" type="primary" plain round @click="followUser"
       >关注</el-button
     >
