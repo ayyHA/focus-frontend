@@ -95,6 +95,14 @@ const getReplies = async (authorId, messageId) => {
     });
 }
 
+const getRetweetedMessage = async (conversationId) => {
+    return instance.request({
+        method: 'get',
+        url: '/message/getRetweetedMessage',
+        params: { conversationId },
+    });
+}
+
 export default {
     uploadMultiPictures,
     publishMessage,
@@ -106,4 +114,5 @@ export default {
     getPinnedMessage,
     deleteMessageById,
     getReplies,
+    getRetweetedMessage,
 }

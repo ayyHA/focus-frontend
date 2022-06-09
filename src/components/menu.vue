@@ -8,7 +8,7 @@
     >
       <el-image
         :src="logo"
-        style="width: 60%; height: 24px; margin-top: 10px"
+        style="width: 60%; height: 24px; margin-top: 20px"
         class="logo-style"
         fit="contain"
       ></el-image>

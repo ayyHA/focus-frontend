@@ -33,6 +33,11 @@ export default {
   components: {
     MessageShow,
   },
+  watch: {
+    messagesUpdate() {
+      this.updateMessages_();
+    },
+  },
   // 混入组件，生命周期、函数、data都混进来
   mixins: [fixMixin],
   data() {
@@ -62,6 +67,9 @@ export default {
     disabled() {
       return this.scrollLoading || this.pageBoom || this.elementTop;
     },
+    messagesUpdate() {
+      return this.$store.state.isUpdateMessages_;
+    },
   },
   methods: {
     async load() {
@@ -88,6 +96,10 @@ export default {
         //   this.maxElements
         // );
       }
+    },
+    updateMessages_() {
+      let msgInfoDto = JSON.parse(localStorage.getItem("updateMessageInfoDto"));
+      this.messages_.unshift(msgInfoDto);
     },
   },
 };

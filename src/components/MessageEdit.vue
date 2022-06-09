@@ -201,6 +201,15 @@ export default {
         /* 上传信息失败 */
         if (publishRes.code == 2005) {
           this.$message.error(publishRes.msg);
+        } else if (publishRes.code == 2006) {
+          /* 上传消息成功 */
+          // 即刻显示新消息
+          localStorage.setItem(
+            "updateMessageInfoDto",
+            JSON.stringify(publishRes.data)
+          );
+          // 让homepage获取数据
+          this.$store.commit("updateMessages_");
         }
         // 对话框隐藏
         this.dialogVisible = false;

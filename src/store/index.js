@@ -25,6 +25,10 @@ export default new Vuex.Store({
     selectedUserInfo: null,
     isUpdateChatList: false,
     deleteMessageId: null,
+    isUpdateMessages_: false,  // 发布新的message[original,retweeted]会更新此值，以unshift至messages_
+    // 被转发的message的信息
+    retweetMsgId: null,
+    retweetAuthorId: null,
   },
   mutations: {
     setMenuName(state, _index) {
@@ -50,6 +54,15 @@ export default new Vuex.Store({
     // 设置deleteMessageId
     setDeleteMessageId(state, _messageId) {
       state.deleteMessageId = _messageId;
+    },
+    // 更新messages_
+    updateMessages_(state) {
+      state.isUpdateMessages_ = !state.isUpdateMessages_;
+    },
+    // 更新被转发的message的信息
+    updateRetweetedMessage(state, retweetMessage) {
+      state.retweetMsgId = retweetMessage.messageId;
+      state.retweetAuthorId = retweetMessage.authorId;
     },
   },
   actions: {

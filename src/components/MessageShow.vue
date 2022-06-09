@@ -9,6 +9,9 @@
           <div v-if="isReply" class="pinned-icon-container">
             <i class="iconfont focus-icon-31pinglun"></i>
           </div>
+          <div v-if="isRetweet" class="pinned-icon-container">
+            <i class="iconfont focus-icon-zhuanfa1"></i>
+          </div>
           <div class="div-avatar">
             <el-image
               :src="user.avatarUrl"
@@ -20,6 +23,7 @@
         <div class="div-box-right">
           <div v-if="showPinnedIcon" class="pinned-icon-text">置顶消息</div>
           <div v-if="isReply" class="pinned-icon-text">评论消息</div>
+          <div v-if="isRetweet" class="pinned-icon-text">转发消息</div>
           <div v-if="isProfile" class="div-user-operate">
             <div class="div-user-info">
               <div style="font-weight: 600">{{ user.nickname }}</div>
@@ -63,6 +67,58 @@
               </el-col>
             </el-row>
           </div>
+          <div v-if="retweetedMessage">
+            <el-card shadow="hover" class="card-style">
+              <div class="retweet-both-slides">
+                <div class="retweet-container">
+                  <div class="retweet-container-left">
+                    <el-image
+                      :src="retweetedMessage.userInfoDto.avatarUrl"
+                      class="left-avatar"
+                    ></el-image>
+                  </div>
+                  <div class="retweet-container-right">
+                    <div>
+                      <div class="retweet-user-operate">
+                        <div class="retweet-user">
+                          <div class="user-nickname">
+                            {{ retweetedMessage.userInfoDto.nickname }}
+                          </div>
+                          <div class="user-date">
+                            {{ retweetedMessage.messageDto.createAt }}
+                          </div>
+                        </div>
+                        <div class="retweet-operate"></div>
+                      </div>
+                      <div class="retweet-content">
+                        {{ retweetedMessage.messageDto.text }}
+                      </div>
+                      <div v-if="retweetedMessage.messageDto.images != null">
+                        <el-row :gutter="10">
+                          <el-col
+                            :span="8"
+                            v-for="image in retweetedMessage.messageDto.images"
+                            :key="
+                              retweetedMessage.messageDto.images.indexOf(image)
+                            "
+                          >
+                            <el-image
+                              :src="image"
+                              fit="cover"
+                              class="message-image"
+                              :preview-src-list="
+                                retweetedMessage.messageDto.images
+                              "
+                            ></el-image>
+                          </el-col>
+                        </el-row>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </el-card>
+          </div>
           <div class="div-mutual">
             <div>
               <div
@@ -101,7 +157,9 @@
                 v-else
                 class="iconfont focus-icon-zhuanfa"
                 style="cursor: pointer"
+                @click="showRetweetEdit"
               ></i>
+              <RetweetEdit ref="retweetEdit" />
               <span v-if="operateStatus.retweetStatus" style="color: #90ee90">{{
                 operateCount.retweetCount
               }}</span>
@@ -117,9 +175,11 @@
 <script>
 import messageApi from "@/axios/message.js";
 import MessageDeleteButton from "@/components/MessageDeleteButton.vue";
+import RetweetEdit from "@/components/RetweetEdit.vue";
 export default {
   components: {
     MessageDeleteButton,
+    RetweetEdit,
   },
   props: {
     //传入的数据
@@ -185,6 +245,7 @@ export default {
       formatKeywords: null,
       isReply: false,
       isRetweet: false,
+      retweetedMessage: null,
     };
   },
   created() {
@@ -208,7 +269,10 @@ export default {
     // 是否是评论型讯息
     if (this.message.type == "replied_to") this.isReply = true;
     // 是否是转发型讯息
-    if (this.message.type == "retweeted") this.isRetweet = true;
+    if (this.message.type == "retweeted") {
+      this.isRetweet = true;
+      this.getRetweetedMessage();
+    }
   },
   computed: {
     isProfile() {
@@ -298,6 +362,34 @@ export default {
       };
       localStorage.setItem("messageInfo", JSON.stringify(messageInfo));
       this.$router.push({ name: "Reply" });
+    },
+    // 显示转发的对话框
+    showRetweetEdit() {
+      // 显示前先传入conversationId和inReplyToAuthorId
+      let retweetMessage = {
+        messageId: this.message.id,
+        authorId: this.message.authorId,
+      };
+      this.$store.commit("updateRetweetedMessage", retweetMessage);
+      this.$refs.retweetEdit.showRetweetDialog();
+    },
+    // 获取转发推文的基本信息
+    async getRetweetedMessage() {
+      let resData = await messageApi.getRetweetedMessage(
+        this.message.conversationId
+      );
+      resData = resData.data;
+      if (resData.code == 2044) {
+        this.retweetedMessage = resData.data;
+        this.retweetedMessage.messageDto.createAt = this.transformTimestamp(
+          this.retweetedMessage.messageDto.createAt
+        );
+        // 将图片转换为Array
+        if (this.retweetedMessage.messageDto.images != null)
+          this.retweetedMessage.messageDto.images = this.imagesArray(
+            this.retweetedMessage.messageDto.images
+          );
+      }
     },
   },
 };
@@ -451,5 +543,61 @@ export default {
 
 .div-operate-info {
   display: flex;
+}
+
+.card-style {
+  /* padding: 0px; */
+  border-radius: 8px;
+  /* cursor: pointer; */
+}
+
+.retweet-both-slides {
+  padding: 12px 16px;
+}
+
+.retweet-container {
+  display: flex;
+}
+
+.retweet-container-left {
+  margin-right: 12px;
+}
+
+.left-avatar {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+
+.retweet-container-right {
+  flex-grow: 1;
+}
+
+.retweet-user-operate {
+  display: flex;
+  justify-content: space-between;
+}
+
+.retweet-user {
+  display: flex;
+}
+
+.user-nickname {
+  color: RGB(97, 144, 232);
+  font-weight: 500;
+}
+
+.user-date {
+  color: RGB(164, 164, 164);
+  padding-left: 5px;
+}
+
+.retweet-operate {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.retweet-content {
+  padding-top: 8px;
 }
 </style>
